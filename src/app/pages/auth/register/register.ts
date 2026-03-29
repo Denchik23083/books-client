@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth-service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -14,6 +14,8 @@ import { RouterModule } from '@angular/router';
 export class Register {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+
 
   isLoading = signal(false);
   successMessage = signal('');
@@ -44,6 +46,7 @@ export class Register {
           email: '',
           password: '',
         });
+        this.router.navigateByUrl('/login');
       },
       error: () => {
         this.isLoading.set(false);

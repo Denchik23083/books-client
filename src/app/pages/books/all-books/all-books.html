@@ -1,1 +1,30 @@
-<p>all-books works!</p>
+<div class="page">
+  <div class="container">
+    <div class="header">
+        <h1>Список книг</h1>
+        <button class="logout" (click)="logout()">Выйти</button>
+    </div>
+
+    @if (isLoading()) {
+      <p class="info">Загрузка...</p>
+    }
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    <div class="grid">
+      @for (book of books(); track book.id) {
+        <div class="card">
+          <h2>{{ book.title }}</h2>
+          <p class="author">{{ book.author }}</p>
+
+          <div class="meta">
+            <span>{{ book.pagesCount }} стр.</span>
+            <span>{{ book.publishDate | date }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

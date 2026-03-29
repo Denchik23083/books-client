@@ -1,12 +1,9 @@
 import { Routes } from '@angular/router';
-import { Register } from './pages/auth/register/register';
-import { Login } from './pages/auth/login/login';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
-    path: '',
-    pathMatch: 'full',
+    path: 'books',
     canActivate: [authGuard],
     loadComponent: () =>
       import('./pages/books/all-books/all-books').then(m => m.AllBooks)
@@ -20,5 +17,10 @@ export const routes: Routes = [
     path: 'register',
     loadComponent: () =>
       import('./pages/auth/register/register').then(m => m.Register)
+  },
+  {
+    path: '',
+    redirectTo: 'books',
+    pathMatch: 'full'
   }
 ];

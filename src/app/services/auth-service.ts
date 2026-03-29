@@ -1,7 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { RegisterReqest } from '../models/register-request.model';
+import { RegisterRequest } from '../models/register-request.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { TokenResponse } from '../models/token-responce.model';
+import { LoginRequest } from '../models/login-request.model';
 
 @Injectable({
   providedIn: 'root',
@@ -9,9 +11,20 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
   private readonly http = inject(HttpClient)
 
-  private readonly apiUrl = 'http://localhost:5000/api/auth/register';
+  private readonly apiUrl = 'https://localhost:5001/api/auth';
 
-  register(data: RegisterReqest): Observable<unknown>{
-    return this.http.post(this.apiUrl, data)
+  register(data: RegisterRequest): Observable<unknown>{
+    return this.http.post(`${this.apiUrl}/register`, data)
+  }
+
+  login(data: LoginRequest): Observable<TokenResponse>{
+    return this.http.post<TokenResponse>(`${this.apiUrl}/login`, data)
+  }
+
+  refresh(refreshToken: string): Observable<TokenResponse> {
+    return this.http.post<TokenResponse>(
+      `${this.apiUrl}/refresh`,
+      { refreshToken }
+    );
   }
 }
