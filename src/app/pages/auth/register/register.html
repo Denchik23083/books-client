@@ -59,6 +59,11 @@
         {{ isLoading() ? 'Регистрация...' : 'Зарегистрироваться' }}
       </button>
 
+      <div class="link">
+        Уже есть аккаунт?
+        <a routerLink="/login">Войти</a>
+      </div>
+
       @if (successMessage()) {
         <div class="success">{{ successMessage() }}</div>
       }
