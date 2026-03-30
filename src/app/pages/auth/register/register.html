@@ -64,10 +64,6 @@
         <a routerLink="/login">Войти</a>
       </div>
 
-      @if (successMessage()) {
-        <div class="success">{{ successMessage() }}</div>
-      }
-
       @if (errorMessage()) {
         <div class="error-box">{{ errorMessage() }}</div>
       }

@@ -18,13 +18,18 @@
         <input type="password" formControlName="password" placeholder="Введите пароль" />
       </div>
 
-      <button type="submit">Войти</button>
+      <button type="submit" [disabled]="isLoading()">
+        {{ isLoading() ? 'Вход...' : 'Войти' }}
+      </button>
 
       <div class="link">
         Нет аккаунта?
         <a routerLink="/register">Зарегистрироваться</a>
       </div>
-
+      
+      @if (errorMessage()) {
+        <div class="error-box">{{ errorMessage() }}</div>
+      }
     </form>
   </div>
 </div>

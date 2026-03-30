@@ -11,7 +11,6 @@ export class BookService {
   private readonly apiUrl = 'https://localhost:6001/api/book';
 
   getAllBooks(): Observable<BookResponce[]> {
-    console.log('servise is good')
     return this.http.get<BookResponce[]>(this.apiUrl);
   }
 }

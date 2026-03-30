@@ -15,8 +15,8 @@
 
     <div class="grid">
       @for (book of books(); track book.id) {
-        <div class="card">
-          <h2>{{ book.title }}</h2>
+        <div class="card" (click)="details(book.id)">
+          <h3>{{ book.title }}</h3>
           <p class="author">{{ book.author }}</p>
 
           <div class="meta">

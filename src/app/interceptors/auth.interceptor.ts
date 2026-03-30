@@ -1,59 +1,70 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import {
+  HttpContextToken,
+  HttpErrorResponse,
+  HttpInterceptorFn
+} from '@angular/common/http';
 import { inject } from '@angular/core';
-import { TokenStorageService } from '../services/token-storage-service';
-import { AuthService } from '../services/auth-service';
 import { Router } from '@angular/router';
 import { catchError, switchMap, throwError } from 'rxjs';
+import { AuthService } from '../services/auth-service';
+import { TokenStorageService } from '../services/token-storage-service';
+
+const RETRY_WITH_REFRESH = new HttpContextToken<boolean>(() => false);
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const tokenStorage = inject(TokenStorageService);
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  const access = tokenStorage.getAccessToken();
+  if (req.url.includes('/refresh')) {
+    return next(req);
+  }
 
-  // добавляем access token
-  const authReq = access
+  const accessToken = tokenStorage.getAccessToken();
+
+  const authReq = accessToken
     ? req.clone({
         setHeaders: {
-          Authorization: `Bearer ${access}`
+          Authorization: `Bearer ${accessToken}`
         }
       })
     : req;
 
   return next(authReq).pipe(
-    catchError((error) => {
-      // если не 401 — пробрасываем
+    catchError((error: HttpErrorResponse) => {
       if (error.status !== 401) {
         return throwError(() => error);
       }
 
-      const refresh = tokenStorage.getRefreshToken();
-
-      // если нет refresh → logout
-      if (!refresh) {
+      if (req.context.get(RETRY_WITH_REFRESH)) {
         tokenStorage.clearTokens();
         router.navigateByUrl('/login');
         return throwError(() => error);
       }
 
-      // пробуем refresh
-      return authService.refresh(refresh).pipe(
+      const refreshToken = tokenStorage.getRefreshToken();
+      const userId = tokenStorage.getUserIdFromToken();
+
+      if (!refreshToken || userId === null) {
+        tokenStorage.clearTokens();
+        router.navigateByUrl('/login');
+        return throwError(() => error);
+      }
+
+      return authService.refresh(userId, refreshToken).pipe(
         switchMap((tokens) => {
-          // сохраняем новые токены
           tokenStorage.setTokens(tokens.accessToken, tokens.refreshToken);
 
-          // повторяем оригинальный запрос с новым access
-          const newReq = req.clone({
+          const retryReq = req.clone({
+            context: req.context.set(RETRY_WITH_REFRESH, true),
             setHeaders: {
               Authorization: `Bearer ${tokens.accessToken}`
             }
           });
 
-          return next(newReq);
+          return next(retryReq);
         }),
         catchError((refreshError) => {
-          // refresh не прошёл → logout
           tokenStorage.clearTokens();
           router.navigateByUrl('/login');
           return throwError(() => refreshError);

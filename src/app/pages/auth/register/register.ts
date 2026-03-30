@@ -16,9 +16,7 @@ export class Register {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
-
   isLoading = signal(false);
-  successMessage = signal('');
   errorMessage = signal('');
 
   form = this.fb.nonNullable.group({
@@ -34,13 +32,11 @@ export class Register {
     }
 
     this.isLoading.set(true);
-    this.successMessage.set('');
     this.errorMessage.set('');
 
     this.authService.register(this.form.getRawValue()).subscribe({
       next: () => {
         this.isLoading.set(false);
-        this.successMessage.set('Регистрация прошла успешно');
         this.form.reset({
           userName: '',
           email: '',

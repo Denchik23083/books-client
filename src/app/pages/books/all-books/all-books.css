@@ -31,6 +31,7 @@ h1 {
 
 .card:hover {
   transform: translateY(-4px);
+  cursor: pointer;
 }
 
 .author {

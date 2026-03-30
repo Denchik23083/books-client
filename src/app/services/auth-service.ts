@@ -21,10 +21,10 @@ export class AuthService {
     return this.http.post<TokenResponse>(`${this.apiUrl}/login`, data)
   }
 
-  refresh(refreshToken: string): Observable<TokenResponse> {
+  refresh(userId: number, refreshToken: string): Observable<TokenResponse> {
     return this.http.post<TokenResponse>(
       `${this.apiUrl}/refresh`,
-      { refreshToken }
+      { userId, refreshToken }
     );
   }
 }

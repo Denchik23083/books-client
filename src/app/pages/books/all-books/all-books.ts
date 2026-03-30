@@ -26,7 +26,6 @@ export class AllBooks {
   }
 
   load() {
-    console.log('com is good');
     this.bookService.getAllBooks().subscribe({
       next: (data) => {
         this.books.set(data);
@@ -37,6 +36,10 @@ export class AllBooks {
         this.isLoading.set(false);
       }
     });
+  }
+
+  details(id: number) {
+    this.router.navigateByUrl(`/books/${id}`);
   }
 
   logout() {
