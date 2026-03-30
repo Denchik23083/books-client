@@ -1,1 +1,69 @@
-<p>edit-book works!</p>
+<div class="page">
+  <div class="container">
+    <div class="header">
+      <h1>Редактировать книгу</h1>
+      <div class="actions">
+        <button class="back" (click)="back()">Назад</button>
+        <button class="logout" (click)="logout()">Выйти</button>
+      </div>
+    </div>
+
+    @if (isBookLoading()) 
+    {
+        <p class="info">Загрузка...</p>
+    } 
+    @else 
+    {
+        <div class="card">
+        <div class="brand">
+            <div class="logo">📚</div>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+            <div class="field">
+                <label>Название</label>
+                <input type="text" formControlName="title" placeholder="Название книги" />
+                @if (title.touched && title.invalid) {
+                <small class="error">
+                    @if (title.errors?.['required']) { Обязательно }
+                    @if (title.errors?.['minlength']) { Минимум 2 символа }
+                </small>
+                }
+            </div>
+
+            <div class="field">
+                <label>Автор</label>
+                <input type="text" formControlName="author" placeholder="Автор" />
+                @if (author.touched && author.invalid) {
+                <small class="error">Обязательно</small>
+                }
+            </div>
+
+            <div class="field">
+                <label>Количество страниц</label>
+                <input type="number" formControlName="pagesCount" />
+                @if (pagesCount.touched && pagesCount.invalid) {
+                <small class="error">Минимум 1 страница</small>
+                }
+            </div>
+
+            <div class="field">
+                <label>Дата публикации</label>
+                <input type="date" formControlName="publishDate" />
+                @if (publishDate.touched && publishDate.invalid) {
+                <small class="error">Обязательно</small>
+                }
+            </div>
+
+            <button type="submit" [disabled]="isLoading()">
+                {{ isLoading() ? 'Сохранение...' : 'Сохранить изменения' }}
+            </button>
+
+            @if (errorMessage()) {
+                <div class="error-box">{{ errorMessage() }}</div>
+            }
+        </form>
+        </div>
+    }
+    </div>
+</div>
