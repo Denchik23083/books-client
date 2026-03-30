@@ -5,12 +5,21 @@ export const routes: Routes = [
   {
     path: 'books',
     canActivate: [authGuard],
+    data: { roles: ['Admin', 'God', 'User'] },
     loadComponent: () =>
       import('./pages/books/all-books/all-books').then(m => m.AllBooks)
   },
   {
+    path: 'books/add',
+    canActivate: [authGuard],
+    data: { roles: ['Admin', 'God'] },
+    loadComponent: () =>
+      import('./pages/books/add-book/add-book').then(m => m.AddBook)
+  },
+  {
     path: 'books/:id',
     canActivate: [authGuard],
+    data: { roles: ['Admin', 'God', 'User'] },
     loadComponent: () =>
       import('./pages/books/detail-book/detail-book').then(m => m.DetailBook)
   },

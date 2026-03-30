@@ -75,3 +75,23 @@ h1 {
 .logout:hover {
   opacity: 0.9;
 }
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.add {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #22c55e;
+  color: white;
+  font-weight: 600;
+}
+
+.add:hover {
+  opacity: 0.9;
+}

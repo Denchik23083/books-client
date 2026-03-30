@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookService } from '../../../services/book-service';
-import { BookResponce } from '../../../models/book-responce.model';
+import { BookResponce } from '../../../models/responces/book-responce.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TokenStorageService } from '../../../services/token-storage-service';
 
