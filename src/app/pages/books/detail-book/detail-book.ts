@@ -20,9 +20,11 @@ export class DetailBook {
 
   book = signal<BookResponce | null>(null);
   isLoading = signal(true);
-  error = signal('');
+  errorMessage = signal('');
+  isAdmin = signal(false);
 
   ngOnInit() {
+    this.checkRole();
     this.load();
   }
 
@@ -30,7 +32,7 @@ export class DetailBook {
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!id) {
-      this.error.set('Некорректный id книги');
+      this.errorMessage.set('Некорректный id книги');
       this.isLoading.set(false);
       return;
     }
@@ -41,14 +43,49 @@ export class DetailBook {
         this.isLoading.set(false);
       },
       error: () => {
-        this.error.set('Ошибка загрузки книги');
+        this.errorMessage.set('Ошибка загрузки книги');
         this.isLoading.set(false);
       }
     });
   }
 
-  back () {
+  checkRole() {
+    const token = this.tokenStorage.getAccessToken();
+
+    if (!token) return;
+
+    const payload = JSON.parse(atob(token.split('.')[1]));
+
+    const role = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+
+    if (role === 'Admin' || role === 'God') {
+      this.isAdmin.set(true);
+    }
+  }
+
+  back() {
     this.router.navigate(['/books']);
+  }
+
+  edit() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.router.navigate(['/books/edit', id]);
+  }
+
+  delete() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    if (!confirm('Удалить книгу?')) return;
+
+    this.bookService.deleteBook(id).subscribe({
+      next: () => {
+        this.router.navigate(['/books']);
+      },
+      error: () => {
+        this.errorMessage.set('Ошибка удалении книги');
+      },
+    });
   }
 
   logout() {

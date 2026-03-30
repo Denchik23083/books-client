@@ -12,11 +12,11 @@
       <p class="info">Загрузка...</p>
     }
 
-    @if (error()) {
-      <p class="error">{{ error() }}</p>
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
     }
 
-    @if (!isLoading() && !error() && book()) {
+    @if (!isLoading() && !errorMessage() && book()) {
       <div class="card">
         <h2>{{ book()!.title }}</h2>
         <p class="author">{{ book()!.author }}</p>
@@ -25,6 +25,13 @@
           <span>{{ book()!.pagesCount }} стр.</span>
           <span>{{ book()!.publishDate | date:'dd.MM.yyyy' }}</span>
         </div>
+
+        @if (isAdmin()) {
+          <div class="card-actions">
+            <button class="edit" (click)="edit()">Редактировать</button>
+            <button class="delete" (click)="delete()">Удалить</button>
+          </div>
+        }
       </div>
     }
   </div>

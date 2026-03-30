@@ -14,8 +14,8 @@
       <p class="info">Загрузка...</p>
     }
 
-    @if (error()) {
-      <p class="error">{{ error() }}</p>
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
     }
 
     <div class="grid">

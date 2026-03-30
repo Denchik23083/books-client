@@ -19,7 +19,7 @@ export class AllBooks {
 
   books = signal<BookResponce[]>([]);
   isLoading = signal(true);
-  error = signal('');
+  errorMessage = signal('');
   isAdmin = signal(false);
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class AllBooks {
         this.isLoading.set(false);
       },
       error: () => {
-        this.error.set('Ошибка загрузки книг');
+        this.errorMessage.set('Ошибка загрузки книг');
         this.isLoading.set(false);
       }
     });
