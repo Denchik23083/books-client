@@ -9,6 +9,12 @@ export const routes: Routes = [
       import('./pages/books/all-books/all-books').then(m => m.AllBooks)
   },
   {
+    path: 'books/:id',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./pages/books/detail-book/detail-book').then(m => m.DetailBook)
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('./pages/auth/login/login').then(m => m.Login)

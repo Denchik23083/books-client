@@ -2,22 +2,23 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookService } from '../../../services/book-service';
 import { BookResponce } from '../../../models/book-responce.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TokenStorageService } from '../../../services/token-storage-service';
 
 @Component({
-  selector: 'app-all-books',
+  selector: 'app-detail-book',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './all-books.html',
-  styleUrl: './all-books.css'
+  templateUrl: './detail-book.html',
+  styleUrl: './detail-book.css',
 })
-export class AllBooks {
+export class DetailBook {
   private readonly bookService = inject(BookService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private readonly tokenStorage = inject(TokenStorageService);
 
-  books = signal<BookResponce[]>([]);
+  book = signal<BookResponce | null>(null);
   isLoading = signal(true);
   error = signal('');
 
@@ -26,20 +27,28 @@ export class AllBooks {
   }
 
   load() {
-    this.bookService.getAllBooks().subscribe({
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    if (!id) {
+      this.error.set('Некорректный id книги');
+      this.isLoading.set(false);
+      return;
+    }
+
+    this.bookService.getBook(id).subscribe({
       next: (data) => {
-        this.books.set(data);
+        this.book.set(data);
         this.isLoading.set(false);
       },
       error: () => {
-        this.error.set('Ошибка загрузки книг');
+        this.error.set('Ошибка загрузки книги');
         this.isLoading.set(false);
       }
     });
   }
 
-  details(id: number) {
-    this.router.navigate(['/books', id]);
+  back () {
+    this.router.navigate(['/books']);
   }
 
   logout() {

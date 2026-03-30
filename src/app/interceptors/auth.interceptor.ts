@@ -38,7 +38,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
       if (req.context.get(RETRY_WITH_REFRESH)) {
         tokenStorage.clearTokens();
-        router.navigateByUrl('/login');
+        router.navigate(['/login']);
         return throwError(() => error);
       }
 
@@ -47,7 +47,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
       if (!refreshToken || userId === null) {
         tokenStorage.clearTokens();
-        router.navigateByUrl('/login');
+        router.navigate(['/login']);
         return throwError(() => error);
       }
 
@@ -66,7 +66,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         }),
         catchError((refreshError) => {
           tokenStorage.clearTokens();
-          router.navigateByUrl('/login');
+          router.navigate(['/login']);
           return throwError(() => refreshError);
         })
       );

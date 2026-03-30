@@ -42,7 +42,7 @@ export class Register {
           email: '',
           password: '',
         });
-        this.router.navigateByUrl('/login');
+        this.router.navigate(['/login']);
       },
       error: () => {
         this.isLoading.set(false);
