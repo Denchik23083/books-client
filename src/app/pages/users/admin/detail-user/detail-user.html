@@ -20,13 +20,13 @@
       <div class="card">
         <h2>{{ user()!.userName }}</h2>
         <p class="author">{{ user()!.email }}</p>
-
-        @if (isGod()) {
-          <div class="card-actions">
-            <button class="edit" (click)="makeAdmin()">Повысить</button>
+        
+        <div class="card-actions">
+            @if (isGod()) {
+                <button class="edit" (click)="makeAdmin()">Повысить</button>
+            }
             <button class="delete" (click)="deleteUser()">Удалить</button>
           </div>
-        }
       </div>
     }
   </div>
