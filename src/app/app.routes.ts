@@ -31,6 +31,34 @@ export const routes: Routes = [
       import('./pages/books/detail-book/detail-book').then(m => m.DetailBook)
   },
   {
+    path: 'users',
+    canActivate: [authGuard],
+    data: { roles: ['Admin', 'God'] },
+    loadComponent: () =>
+      import('./pages/users/admin/all-users/all-users').then(m => m.AllUsers)
+  },
+  {
+    path: 'users/:id',
+    canActivate: [authGuard],
+    data: { roles: ['Admin', 'God'] },
+    loadComponent: () =>
+      import('./pages/users/admin/detail-user/detail-user').then(m => m.DetailUser)
+  },
+  {
+    path: 'admins',
+    canActivate: [authGuard],
+    data: { roles: ['God'] },
+    loadComponent: () =>
+      import('./pages/users/god/all-admins/all-admins').then(m => m.AllAdmins)
+  },
+  {
+    path: 'admins/:id',
+    canActivate: [authGuard],
+    data: { roles: ['God'] },
+    loadComponent: () =>
+      import('./pages/users/god/detail-admin/detail-admin').then(m => m.DetailAdmin)
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('./pages/auth/login/login').then(m => m.Login)

@@ -63,6 +63,14 @@ export class AllBooks {
     this.router.navigate(['/books', id]);
   }
 
+  users() {
+    this.router.navigate(['/users']);
+  }
+
+  admins() {
+    this.router.navigate(['/admins']);
+  }
+
   addBook() {
     this.router.navigate(['/books/add']);
   }
