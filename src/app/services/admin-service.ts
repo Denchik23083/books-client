@@ -17,4 +17,8 @@ export class AdminService {
   getUser(id: number): Observable<UserResponce> {
     return this.http.get<UserResponce>(`${this.apiUrl}/${id}`);
   }
+
+  deleteUser(id: number): Observable<unknown> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }

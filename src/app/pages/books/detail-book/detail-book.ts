@@ -73,7 +73,7 @@ export class DetailBook {
     this.router.navigate(['/books/edit', id]);
   }
 
-  delete() {
+  deleteBook() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!confirm('Удалить книгу?')) return;

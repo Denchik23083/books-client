@@ -17,4 +17,12 @@ export class GodService {
   getAdmin(id: number): Observable<UserResponce> {
     return this.http.get<UserResponce>(`${this.apiUrl}/${id}`);
   }
+
+  makeAdmin(id: number): Observable<unknown> {
+    return this.http.post(`${this.apiUrl}/${id}/make-admin`, null);
+  }
+
+  makeUser(id: number): Observable<unknown> {
+    return this.http.post(`${this.apiUrl}/${id}/make-user`, null);
+  }
 }
