@@ -21,6 +21,7 @@ export class AllBooks {
   isLoading = signal(true);
   errorMessage = signal('');
   isAdmin = signal(false);
+  isGod = signal(false);
 
   ngOnInit() {
     this.checkRole();
@@ -49,8 +50,12 @@ export class AllBooks {
 
     const role = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
-    if (role === 'Admin' || role === 'God') {
+    if (role === 'Admin') {
       this.isAdmin.set(true);
+    }
+
+    if (role === 'God') {
+      this.isGod.set(true);
     }
   }
 

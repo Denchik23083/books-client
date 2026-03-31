@@ -92,6 +92,28 @@ h1 {
   font-weight: 600;
 }
 
-.add:hover {
+.add, .users, .admins {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: 600;
+}
+
+.add {
+  background: #22c55e;
+}
+
+.users {
+  background: #3b82f6;
+}
+
+.admins {
+  background: #7C3AED;
+}
+
+.add:hover, .users:hover, .admins:hover {
   opacity: 0.9;
 }
