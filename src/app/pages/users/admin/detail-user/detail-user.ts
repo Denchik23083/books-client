@@ -75,7 +75,7 @@ export class DetailUser {
         this.router.navigate(['/users']);
       },
       error: () => {
-        this.errorMessage.set('Ошибка становлением администратором');
+        this.errorMessage.set('Ошибка при назначении администратором');
       },
     });
   }
@@ -90,7 +90,7 @@ export class DetailUser {
         this.router.navigate(['/users']);
       },
       error: () => {
-        this.errorMessage.set('Ошибка удалении пользователя');
+        this.errorMessage.set('Ошибка при удалении пользователя');
       },
     });
   }
