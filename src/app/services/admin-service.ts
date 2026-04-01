@@ -8,7 +8,7 @@ import { UserResponce } from '../models/responces/user-responce.model';
 })
 export class AdminService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'https://localhost:7001/api/admin';
+  private readonly apiUrl = '/api/admin/admin';
 
   getAllUsers(): Observable<UserResponce[]> {
     return this.http.get<UserResponce[]>(this.apiUrl);

@@ -9,7 +9,7 @@ import { BookRequest } from '../models/requests/book-request.model';
 })
 export class BookService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'https://localhost:6001/api/book';
+  private readonly apiUrl = '/api/library/book';
 
   getAllBooks(): Observable<BookResponce[]> {
     return this.http.get<BookResponce[]>(this.apiUrl);

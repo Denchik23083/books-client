@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class GodService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'https://localhost:7001/api/god';
+  private readonly apiUrl = '/api/admin/god';
 
   getAllAdmins(): Observable<UserResponce[]> {
     return this.http.get<UserResponce[]>(this.apiUrl);

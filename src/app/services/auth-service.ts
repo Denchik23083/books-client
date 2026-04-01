@@ -11,7 +11,7 @@ import { LoginRequest } from '../models/requests/login-request.model';
 export class AuthService {
   private readonly http = inject(HttpClient)
 
-  private readonly apiUrl = 'https://localhost:5001/api/auth';
+  private readonly apiUrl = '/api/auth/auth';
 
   register(data: RegisterRequest): Observable<unknown>{
     return this.http.post(`${this.apiUrl}/register`, data)

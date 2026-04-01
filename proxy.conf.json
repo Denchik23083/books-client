@@ -1,0 +1,17 @@
+{
+  "/api/auth": {
+    "target": "http://localhost:5000",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/api/library": {
+    "target": "http://localhost:6000",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/api/admin": {
+    "target": "http://localhost:7000",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
